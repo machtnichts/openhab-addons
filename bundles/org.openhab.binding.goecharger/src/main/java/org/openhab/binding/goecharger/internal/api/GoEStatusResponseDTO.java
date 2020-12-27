@@ -33,6 +33,9 @@ public class GoEStatusResponseDTO {
     @SerializedName("amp")
     public Integer maxCurrent;
 
+    @SerializedName("amx")
+    public Integer sessionMaxCurrent;
+
     @SerializedName("nrg")
     public Integer[] energy;
 

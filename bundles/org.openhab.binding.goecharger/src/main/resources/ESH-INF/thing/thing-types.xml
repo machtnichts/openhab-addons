@@ -9,6 +9,7 @@
 		<description>Go-eCharger thing that represents the wallbox configuration and readings</description>
 
 		<channels>
+			<channel id="sessionMaxCurrent" typeId="sc"/>
 			<channel id="maxCurrent" typeId="current"/>
 			<channel id="pwmSignal" typeId="pwm"/>
 			<channel id="error" typeId="err"/>
@@ -63,6 +64,12 @@
 		<item-type>Number:ElectricCurrent</item-type>
 		<label>Maximum Current</label>
 		<description>Maximum current per phase allowed to use for charging</description>
+		<state pattern="%d %unit%" readOnly="false"/>
+	</channel-type>
+	<channel-type id="sc">
+		<item-type>Number:ElectricCurrent</item-type>
+		<label>Maximum Current(Session)</label>
+		<description>Maximum current per phase allowed to use for charging, session</description>
 		<state pattern="%d %unit%" readOnly="false"/>
 	</channel-type>
 	<channel-type id="pwm">

@@ -21,6 +21,7 @@ import static org.openhab.binding.goecharger.internal.GoEChargerBindingConstants
 import static org.openhab.binding.goecharger.internal.GoEChargerBindingConstants.ERROR;
 import static org.openhab.binding.goecharger.internal.GoEChargerBindingConstants.FIRMWARE;
 import static org.openhab.binding.goecharger.internal.GoEChargerBindingConstants.MAX_CURRENT;
+import static org.openhab.binding.goecharger.internal.GoEChargerBindingConstants.SESSION_MAX_CURRENT;
 import static org.openhab.binding.goecharger.internal.GoEChargerBindingConstants.PHASES;
 import static org.openhab.binding.goecharger.internal.GoEChargerBindingConstants.POWER_L1;
 import static org.openhab.binding.goecharger.internal.GoEChargerBindingConstants.POWER_L2;
@@ -108,6 +109,11 @@ public class GoEChargerHandler extends BaseThingHandler {
                     return UnDefType.UNDEF;
                 }
                 return new QuantityType<>(goeResponse.maxCurrent, SmartHomeUnits.AMPERE);
+            case SESSION_MAX_CURRENT:
+                if (goeResponse.sessionMaxCurrent == null) {
+                    return UnDefType.UNDEF;
+                }
+                return new QuantityType<>(goeResponse.sessionMaxCurrent, SmartHomeUnits.AMPERE);
             case PWM_SIGNAL:
                 if (goeResponse.pwmSignal == null) {
                     return UnDefType.UNDEF;
@@ -295,6 +301,15 @@ public class GoEChargerHandler extends BaseThingHandler {
                 } else if (command instanceof QuantityType<?>) {
                     value = String.valueOf(
                             ((QuantityType<ElectricCurrent>) command).toUnit(SmartHomeUnits.AMPERE).intValue());
+                }
+                break;
+            case SESSION_MAX_CURRENT:
+                key = "amx";
+                if (command instanceof DecimalType) {
+                    value = String.valueOf(((DecimalType) command).intValue());
+                } else if (command instanceof QuantityType<?>) {
+                    value = String.valueOf(
+                        ((QuantityType<ElectricCurrent>) command).toUnit(SmartHomeUnits.AMPERE).intValue());
                 }
                 break;
             case SESSION_CHARGE_CONSUMPTION_LIMIT:
